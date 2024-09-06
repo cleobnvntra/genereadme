@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A command-line tool that takes in a file and outputs a README.md file that explains the inputted file.",
   "main": "index.js",
+  "type": "module",
+  "bin": {
+    "readme-generator": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +22,8 @@
   "homepage": "https://github.com/cleobnvntra/rm-generator#readme",
   "dependencies": {
     "commander": "^12.1.0",
-    "ollama": "^0.5.8"
+    "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security",
+    "groq-sdk": "^0.7.0"
   }
 }

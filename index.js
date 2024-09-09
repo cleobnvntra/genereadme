@@ -1,33 +1,36 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
-import Groq from 'groq-sdk';
-import fs from 'fs';
-import path from 'path';
-import 'dotenv/config';
+import { Command } from "commander";
+import Groq from "groq-sdk";
+import fs from "fs";
+import path from "path";
+import "dotenv/config";
 
 // https://www.npmjs.com/package/commander
 const program = new Command();
 
 const client = new Groq({
   apiKey: process.env.GROQ_API_KEY,
-})
+});
 
 program
-  .name('genereadme')
-  .usage('[command] [options]')
-  .description('CLI tool to generate a README file explaining a source code file')
-  .version('1.0.0');
+  .name("genereadme")
+  .usage("[command] [options]")
+  .description(
+    "CLI tool to generate a README file explaining a source code file"
+  )
+  .version("1.0.0");
 
 program
-  .command('generate')
-  .description('Generate a README for the provided source code file')
-  .argument('<file>', 'Source code file to process')
-  .action(async (file) => {
+  .command("generate")
+  .description("Generate a README for the provided source code file")
+  .argument("<file...>", "Source code file to process")
+  .action(async (files) => {
     try {
-      const codeContent = fs.readFileSync(file, 'utf-8');
-      
-      const prompt = `Please generate a README.md file explaining the contents of the following file.
+      for (const file of files) {
+        const codeContent = fs.readFileSync(file, "utf-8");
+
+        const prompt = `Please generate a README.md file explaining the contents of the following file.
       The README should have a title, description, and code snippets with explanations.
       The code snippet should be pieces of code from the source code file. Not the entire code.
       The title should be # tag, subheadings should be ## tags, and code snippets should be in a code block.
@@ -38,20 +41,27 @@ program
 
       ${codeContent}`;
 
-      const response = await client.chat.completions.create({
-        messages: [{ role: "user", content: prompt }],
-        model: 'llama-3.1-70b-versatile',
-        temperature: 1,
-      });
+        const response = await client.chat.completions.create({
+          messages: [{ role: "user", content: prompt }],
+          model: "llama-3.1-70b-versatile",
+          temperature: 1,
+        });
 
-      const fileDir = path.dirname(file);
-      const outputPath = path.join(fileDir, 'README.md');
-      console.log(response)
+        const fileDir = path.dirname(file);
+        const fileName = path.parse(file).name;
+        console.log(fileName);
+        const outputPath = path.join(fileDir, `${fileName}_README.md`);
+        console.log(response);
 
-      fs.writeFileSync(outputPath, response.choices[0].message.content, 'utf-8');
-      console.log('README.md has been generated successfully!');
+        fs.writeFileSync(
+          outputPath,
+          response.choices[0].message.content,
+          "utf-8"
+        );
+        console.log("README.md has been generated successfully!");
+      }
     } catch (error) {
-      console.error('Error generating README:', error);
+      console.error("Error generating README:", error);
     }
   });
 

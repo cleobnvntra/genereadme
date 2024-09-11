@@ -1,6 +1,6 @@
 {
-  "name": "rm-generator",
-  "version": "1.0.0",
+  "name": "genereadme",
+  "version": "0.0.1",
   "description": "A command-line tool that takes in a file and outputs a README.md file that explains the inputted file.",
   "main": "index.js",
   "type": "module",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cleobnvntra/rm-generator.git"
+    "url": "git+https://github.com/cleobnvntra/genereadme.git"
   },
   "author": "Cleo Buenaventura",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cleobnvntra/rm-generator/issues"
+    "url": "https://github.com/cleobnvntra/genereadme/issues"
   },
-  "homepage": "https://github.com/cleobnvntra/rm-generator#readme",
+  "homepage": "https://github.com/cleobnvntra/genereadme#readme",
   "dependencies": {
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",

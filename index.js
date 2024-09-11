@@ -23,7 +23,8 @@ program
     `${packageJson.name} ${packageJson.version}`,
     "-v, --version",
     "Outputs the tool name and current version"
-  );
+  )
+  .option("-o, --output <filename>", "output result to specified filename");
 
 program
   .command("generate")
@@ -40,6 +41,18 @@ program
           "Error initializing Groq client. Please provide a valid GROQ_API_KEY in the .env file."
         );
       }
+
+      const outputFile = program.opts().output;
+
+      if (outputFile) {
+        if (!outputFile.endsWith(".md")) {
+          throw new Error(
+            "Invalid filename provided. The filename must be a markdown file (.md)."
+          );
+        }
+      }
+
+      let combinedContent = "";
       for (const file of files) {
         const codeContent = fs.readFileSync(file, "utf-8");
 
@@ -80,22 +93,31 @@ program
           );
         }
 
-        const fileDir = path.dirname(file);
-        const fileName = path.parse(file).name;
-        console.log(fileName);
-        const outputPath = path.join(fileDir, `${fileName}_README.md`);
-        console.log(response);
+        const outputContent = response.choices[0].message.content;
 
-        fs.writeFileSync(
-          outputPath,
-          response.choices[0].message.content,
-          "utf-8"
-        );
-        console.log("README.md has been generated successfully!");
-        console.log(`${response.choices[0].message.content}`);
+        if (outputFile) {
+          combinedContent += outputContent + "\n\n";
+        } else {
+          const fileName = path.parse(file).name;
+          const outputPath = `${fileName}_README.md`;
+
+          fs.writeFileSync(
+            outputPath,
+            response.choices[0].message.content,
+            "utf-8"
+          );
+          console.log(`${fileName}_README.md has been generated successfully!`);
+          console.log(`${response.choices[0].message.content}`);
+        }
+      }
+
+      if (outputFile) {
+        fs.writeFileSync(outputFile, combinedContent, "utf-8");
+        console.log(`${outputFile} has been generated successfully!`);
+        console.log(`${combinedContent}`);
       }
     } catch (error) {
-      console.error("Error generating README:", error);
+      console.error("Error generating README:", error.message);
     }
   });
 

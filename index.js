@@ -10,10 +10,7 @@ const packageJson = require("./package.json");
 
 // https://www.npmjs.com/package/commander
 const program = new Command();
-
-const client = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+let client;
 
 program
   .name(packageJson.name)
@@ -34,6 +31,15 @@ program
   .argument("<file...>", "Source code file to process")
   .action(async (files) => {
     try {
+      if (process.env.GROQ_API_KEY) {
+        client = new Groq({
+          apiKey: process.env.GROQ_API_KEY,
+        });
+      } else {
+        throw new Error(
+          "Error initializing Groq client. Please provide a valid GROQ_API_KEY in the .env file."
+        );
+      }
       for (const file of files) {
         const codeContent = fs.readFileSync(file, "utf-8");
 
@@ -86,6 +92,7 @@ program
           "utf-8"
         );
         console.log("README.md has been generated successfully!");
+        console.log(`${response.choices[0].message.content}`);
       }
     } catch (error) {
       console.error("Error generating README:", error);

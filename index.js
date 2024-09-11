@@ -24,21 +24,24 @@ program
     "-v, --version",
     "Outputs the tool name and current version"
   )
-  .option("-o, --output <filename>", "output result to specified filename");
+  .option("-o, --output <filename>", "output result to specified filename")
+  .option("-a, --api-key <key>", "API key for the Groq API");
 
 program
   .command("generate")
   .description("Generate a README for the provided source code file")
   .argument("<file...>", "Source code file to process")
   .action(async (files) => {
+    const apiKey = program.opts().apiKey;
+    console.log("APIKEY", apiKey);
     try {
-      if (process.env.GROQ_API_KEY) {
+      if (apiKey || process.env.GROQ_API_KEY) {
         client = new Groq({
-          apiKey: process.env.GROQ_API_KEY,
+          apiKey: apiKey ? apiKey : process.env.GROQ_API_KEY,
         });
       } else {
         throw new Error(
-          "Error initializing Groq client. Please provide a valid GROQ_API_KEY in the .env file."
+          "Error initializing Groq client. Please provide a valid GROQ_API_KEY in the .env file or use the -a or --api-key to provide a valid api key."
         );
       }
 
@@ -81,11 +84,17 @@ program
 
         ${codeContent}`;
 
-        const response = await client.chat.completions.create({
-          messages: [{ role: "user", content: prompt }],
-          model: "llama-3.1-70b-versatile",
-          temperature: 1,
-        });
+        let response;
+        try {
+          response = await client.chat.completions.create({
+            messages: [{ role: "user", content: prompt }],
+            model: "llama-3.1-70b-versatile",
+            temperature: 1,
+          });
+        } catch (error) {
+          console.error("Error generating README:", error.error.error.message);
+          return;
+        }
 
         if (response.choices[0].message.content === "Invalid file") {
           throw new Error(

@@ -1,10 +1,12 @@
-#!/usr/bin/env node
-
 import { Command } from "commander";
 import Groq from "groq-sdk";
 import fs from "fs";
 import path from "path";
 import "dotenv/config";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const packageJson = require("./package.json");
 
 // https://www.npmjs.com/package/commander
 const program = new Command();
@@ -14,12 +16,17 @@ const client = new Groq({
 });
 
 program
-  .name("genereadme")
+  .name(packageJson.name)
   .usage("[command] [options]")
   .description(
     "CLI tool to generate a README file explaining a source code file"
   )
-  .version("1.0.0");
+  .helpCommand(false)
+  .version(
+    `${packageJson.name} ${packageJson.version}`,
+    "-v, --version",
+    "Outputs the tool name and current version"
+  );
 
 program
   .command("generate")

@@ -28,16 +28,12 @@ program
   .option(
     "-t, --temperature <temperature>",
     "Temperature for the chat completions"
-  );
-
-program
-  .description("Generate a README for the provided source code file")
+  )
   .argument("<file...>", "Source code file to process")
   .action(async (files) => {
-    const apiKey = program.opts().apiKey;
-    let client;
-    console.log("APIKEY", apiKey);
     try {
+      const apiKey = program.opts().apiKey;
+      let client;
       if (apiKey || process.env.GROQ_API_KEY) {
         client = new Groq({
           apiKey: apiKey ? apiKey : process.env.GROQ_API_KEY,

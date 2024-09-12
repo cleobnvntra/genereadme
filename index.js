@@ -29,6 +29,18 @@ program
     "-t, --temperature <temperature>",
     "Temperature for the chat completions"
   )
+  .configureOutput({
+    outputError: (str) => {
+      if (str.includes("error: missing required argument")) {
+        console.error(
+          "Error: No source code file provided. Please provide a valid source code file to process.\n\nuse command: genereadme <files...>"
+        );
+        process.exit(1);
+      } else {
+        console.error(err);
+      }
+    },
+  })
   .argument("<file...>", "Source code file to process")
   .action(async (files) => {
     try {

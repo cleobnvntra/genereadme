@@ -10,7 +10,6 @@ const packageJson = require("./package.json");
 
 // https://www.npmjs.com/package/commander
 const program = new Command();
-let client;
 
 program
   .name(packageJson.name)
@@ -32,11 +31,11 @@ program
   );
 
 program
-  .command("generate")
   .description("Generate a README for the provided source code file")
   .argument("<file...>", "Source code file to process")
   .action(async (files) => {
     const apiKey = program.opts().apiKey;
+    let client;
     console.log("APIKEY", apiKey);
     try {
       if (apiKey || process.env.GROQ_API_KEY) {

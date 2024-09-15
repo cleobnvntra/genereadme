@@ -36,14 +36,14 @@ Files to be used can be placed anywhere as long as you provide the appropriate p
 
 # Flag options
 
-| flag                | description                                                                                                              | usage                                                                         |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| -v<br>--version     | Displays the tool's name and the current version.                                                                        | **genereadme** -v<br>**genereadme** --version                                 |
-| -o<br>--output      | Writes the generated result into the specified filename.                                                                 | **genereadme** -o `filename`<br>**genereadme** --output `filename`            |
-| -a<br>--api-key     | Allows you to provide your own API key to use for Groq API.                                                              | **genereadme** -a `key`<br>**genereadme** --api-key `key`                     |
-| -t<br>--temperature | Allows your to provide your preferred temperature for the chat completion generation. Currently supports `0.1` to `1.5`. | **genereadme** -t `temperature`<br>**genereadme** --temperature `temperature` |
-| --token-usage       | Shows the count of the tokens sent in the `prompt` and returned in the `completion`                                      | **genereadme** --token-usage `filename`                                       |
-| -h<br>--help        | Displays how to use the tool, the arguments accepted, and the available flags.                                           | **genereadme** -h<br>**genereadme** --help                                    |
+| flag                 | description                                                                                                              | usage                                                                         |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| -v<br>--version      | Displays the tool's name and the current version.                                                                        | **genereadme** -v<br>**genereadme** --version                                 |
+| -o<br>--output       | Writes the generated result into the specified filename.                                                                 | **genereadme** -o `filename`<br>**genereadme** --output `filename`            |
+| -a<br>--api-key      | Allows you to provide your own API key to use for Groq API.                                                              | **genereadme** -a `key`<br>**genereadme** --api-key `key`                     |
+| -t<br>--temperature  | Allows your to provide your preferred temperature for the chat completion generation. Currently supports `0.1` to `1.5`. | **genereadme** -t `temperature`<br>**genereadme** --temperature `temperature` |
+| -tu<br>--token-usage | Shows the count of the tokens sent in the `prompt` and returned in the `completion`                                      | **genereadme** -tu `filename`<br>**genereadme** --token-usage `filename`      |
+| -h<br>--help         | Displays how to use the tool, the arguments accepted, and the available flags.                                           | **genereadme** -h<br>**genereadme** --help                                    |
 
 <br/>
 

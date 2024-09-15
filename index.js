@@ -29,7 +29,7 @@ program
     "-t, --temperature <temperature>",
     "Temperature for the chat completions"
   )
-  .option("--token-usage", "Show prompt and completion token usage")
+  .option("-tu, --token-usage", "Show prompt and completion token usage")
   .configureOutput({
     outputError: (str) => {
       if (str.includes("error: missing required argument")) {

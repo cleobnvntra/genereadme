@@ -29,6 +29,7 @@ program
     "-t, --temperature <temperature>",
     "Temperature for the chat completions"
   )
+  .option("--token-usage", "Show prompt and completion token usage")
   .configureOutput({
     outputError: (str) => {
       if (str.includes("error: missing required argument")) {
@@ -65,6 +66,9 @@ program
           );
         }
       }
+
+      let promptTokens = 0;
+      let completionTokens = 0;
 
       let combinedContent = "";
       for (const file of files) {
@@ -121,6 +125,9 @@ program
           return;
         }
 
+        promptTokens += response.usage.prompt_tokens;
+        completionTokens += response.usage.completion_tokens;
+
         if (response.choices[0].message.content === "Invalid file") {
           throw new Error(
             "The file passed is either not majorly a source code, does not contain any code, or is not a valid file."
@@ -149,6 +156,11 @@ program
         fs.writeFileSync(outputFile, combinedContent, "utf-8");
         console.log(`${outputFile} has been generated successfully!`);
         console.log(`${combinedContent}`);
+      }
+
+      if (program.opts().tokenUsage) {
+        console.error(`Prompt tokens: ${promptTokens}`);
+        console.error(`Completion tokens: ${completionTokens}`);
       }
     } catch (error) {
       console.error("Error generating README:", error.message);

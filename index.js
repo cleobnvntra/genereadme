@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import Groq from "groq-sdk";
+import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
 import "dotenv/config";
@@ -13,16 +13,18 @@ const program = new Command();
 
 program
   .name(packageJson.name)
-  .usage("[command] [options]")
+  .usage("<filename> [options]")
   .description(
     "CLI tool to generate a README file explaining a source code file"
   )
   .helpCommand(false)
+  .addHelpText("after", "\nSupported providers: [Groq, OpenRouter]")
   .version(
     `${packageJson.name} ${packageJson.version}`,
     "-v, --version",
     "Outputs the tool name and current version"
   )
+  .option("-p, --provider <provider>", "Provider for the chat completions")
   .option("-o, --output <filename>", "output result to specified filename")
   .option("-a, --api-key <key>", "API key for the Groq API")
   .option(
@@ -46,14 +48,33 @@ program
   .action(async (files) => {
     try {
       const apiKey = program.opts().apiKey;
+      const provider = program.opts().provider || "Groq";
       let client;
-      if (apiKey || process.env.GROQ_API_KEY) {
-        client = new Groq({
-          apiKey: apiKey ? apiKey : process.env.GROQ_API_KEY,
+      let baseURL;
+      let model;
+
+      if (provider.toLowerCase() == "groq") {
+        baseURL = "https://api.groq.com/openai/v1";
+        model = "llama-3.1-70b-versatile";
+      } else if (provider.toLowerCase() == "openrouter") {
+        baseURL = "https://openrouter.ai/api/v1";
+        model = "meta-llama/llama-3.1-8b-instruct:free";
+      } else {
+        throw new Error(
+          `${provider} is invalid or is currently unsupported. Please choose from the supported providers:\n` +
+            "1. Groq\n" +
+            "2. OpenRouter"
+        );
+      }
+
+      if (apiKey || process.env.API_KEY) {
+        client = new OpenAI({
+          baseURL: baseURL,
+          apiKey: apiKey || process.env.API_KEY,
         });
       } else {
         throw new Error(
-          "Error initializing Groq client. Please provide a valid GROQ_API_KEY in the .env file or use the -a or --api-key to provide a valid api key."
+          "API key is required to use the tool. Please provide a valid API key for the appropriate provider."
         );
       }
 
@@ -114,14 +135,16 @@ program
         }
 
         try {
-          console.log(`Generating README with ${temp} temperature...`);
+          console.log(`Generating README...`);
+          console.log(`Provider: ${provider}`);
+          console.log(`Temperature: ${temp}`);
           response = await client.chat.completions.create({
             messages: [{ role: "user", content: prompt }],
-            model: "llama-3.1-70b-versatile",
+            model: model,
             temperature: temp,
           });
         } catch (error) {
-          console.error("Error generating README:", error.error.error.message);
+          console.error("Error generating README:", error.message);
           return;
         }
 

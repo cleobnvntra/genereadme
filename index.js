@@ -39,6 +39,7 @@ program
         process.exit(1);
       } else {
         console.error(err);
+        process.exit(1);
       }
     },
   })
@@ -122,7 +123,7 @@ program
           });
         } catch (error) {
           console.error("Error generating README:", error.error.error.message);
-          return;
+          process.exit(1);
         }
 
         promptTokens += response.usage.prompt_tokens;
@@ -164,7 +165,9 @@ program
       }
     } catch (error) {
       console.error("Error generating README:", error.message);
+      process.exit(1);
     }
+    process.exit(0);
   });
 
 program.parse(process.argv);

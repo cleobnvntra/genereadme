@@ -62,6 +62,7 @@ program.action(async (files) => {
 });
 
 function readConfigFile() {
+  
   const homeDir = os.homedir();
   const configFilePath = path.join(homeDir, "./genereadme-config.toml");
 

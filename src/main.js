@@ -11,20 +11,15 @@ import generateCompletion from "./openai/generateCompletion.js";
 program.action(async (files) => {
   try {
     const config = readConfigFile();
-    console.log("Config file content:", config);
     const options = getOptions();
-    console.log("Options:", options);
 
     // Filter out undefined values from options
     Object.keys(options).forEach(key => options[key] === undefined ? delete options[key] : {})
-
-    console.log("Filtered Options:", options);
     
+    //If arguments are passed in the command line, they will override the config file
     const finalOptions = { ...config, ...options };
 
     const { apiKey, provider, outputFile, temperature, tokenUsage } = finalOptions;
-
-    console.log("Final Options:", finalOptions);
 
     let totalPromptTokensUsed = 0;
     let totalCompletionTokensUsed = 0;

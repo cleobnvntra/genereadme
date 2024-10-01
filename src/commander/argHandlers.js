@@ -23,5 +23,14 @@ export function getOptions() {
     );
   }
 
-  return { apiKey, provider, outputFile, temperature, tokenUsage };
+  const options = { apiKey, provider, outputFile, temperature, tokenUsage };
+
+  // Remove undefined properties
+  Object.keys(options).forEach(key => {
+    if (options[key] === undefined) {
+      delete options[key];
+    }
+  });
+
+  return options;
 }

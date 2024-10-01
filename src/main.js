@@ -3,15 +3,12 @@ import fs from "fs";
 import program from "./commander/setup.js";
 import { getOptions } from "./commander/argHandlers.js";
 import generateCompletion from "./openai/generateCompletion.js";
-import { readConfigFile } from "./utils/readConfig.js";
+import { readConfigFile } from "../utils/readConfig.js";
 
 program.action(async (files) => {
   try {
     const config = readConfigFile();
     const options = getOptions();
-
-    // Filter out undefined values from options
-    Object.keys(options).forEach(key => options[key] === undefined ? delete options[key] : {})
     
     //If arguments are passed in the command line, they will override the config file
     const finalOptions = { ...config, ...options };

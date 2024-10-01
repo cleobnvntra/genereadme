@@ -24,6 +24,7 @@
     "commander": "^12.1.0",
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
-    "openai": "^4.63.0"
+    "openai": "^4.63.0",
+    "toml": "^3.0.0"
   }
 }

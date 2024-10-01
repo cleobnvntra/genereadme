@@ -6,11 +6,9 @@ import program from "./setup.js";
  */
 export function getOptions() {
   const apiKey = program.opts().apiKey;
-  const provider = program.opts().provider || "Groq";
+  const provider = program.opts().provider;
   const outputFile = program.opts().output;
-  const temperature = program.opts().temperature
-    ? parseFloat(program.opts().temperature)
-    : 0.7;
+  const temperature = program.opts().temperature;
   const tokenUsage = program.opts().tokenUsage;
 
   if (outputFile && !outputFile.endsWith(".md")) {

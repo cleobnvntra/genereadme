@@ -50,6 +50,26 @@ Files to be used can be placed anywhere as long as you provide the appropriate p
 
 <br/>
 
+# TOML Config File
+
+If you don't want to specify the options as command line arguments, you could add an optional TOML config file.
+
+Create `genereadme-config.toml` in your home directory. For eg. in windows, it is:  `C:\Users\yourusername`
+
+Here is an example:
+
+`genereadme-config.toml`
+```
+apiKey = "yourAPIkey"
+temperature = 0.5
+tokenUsage = true
+```
+
+If you want to override any of the options, you can enter them as command line arguments.
+
+
+<br/>
+
 # Dependencies
 
 ### [OpenAI](https://openai.com/)

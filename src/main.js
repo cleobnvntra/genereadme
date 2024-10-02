@@ -3,17 +3,11 @@ import fs from "fs";
 import program from "./commander/setup.js";
 import { getOptions } from "./commander/argHandlers.js";
 import generateCompletion from "./openai/generateCompletion.js";
-import { readConfigFile } from "../utils/readConfig.js";
 
 program.action(async (files) => {
   try {
-    const config = readConfigFile();
-    const options = getOptions();
-    
-    //If arguments are passed in the command line, they will override the config file
-    const finalOptions = { ...config, ...options };
 
-    const { apiKey, provider, outputFile, temperature, tokenUsage } = finalOptions;
+    const { apiKey, provider, outputFile, temperature, tokenUsage } = getOptions();
 
     let totalPromptTokensUsed = 0;
     let totalCompletionTokensUsed = 0;

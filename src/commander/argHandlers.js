@@ -1,15 +1,19 @@
 import program from "./setup.js";
+import { readConfigFile } from "../../utils/readConfig.js";
 
 /**
  * Retrieves the flag options in the command line arguments.
  * @returns {Object} The options object.
  */
 export function getOptions() {
-  const apiKey = program.opts().apiKey;
-  const provider = program.opts().provider;
-  const outputFile = program.opts().output;
-  const temperature = program.opts().temperature;
-  const tokenUsage = program.opts().tokenUsage;
+
+   //If arguments are passed in the command line, they will override the config file values.
+  const config = readConfigFile();
+  const apiKey = program.opts().apiKey || config.apiKey;
+  const provider = program.opts().provider || config.provider;
+  const outputFile = program.opts().output || config.outputFile;
+  const temperature = program.opts().temperature  || config.temperature;
+  const tokenUsage = program.opts().tokenUsage || config.tokenUsage;
 
   if (outputFile && !outputFile.endsWith(".md")) {
     throw new Error(
@@ -23,14 +27,5 @@ export function getOptions() {
     );
   }
 
-  const options = { apiKey, provider, outputFile, temperature, tokenUsage };
-
-  // Remove undefined properties
-  Object.keys(options).forEach(key => {
-    if (options[key] === undefined) {
-      delete options[key];
-    }
-  });
-
-  return options;
+  return { apiKey, provider, outputFile, temperature, tokenUsage };
 }

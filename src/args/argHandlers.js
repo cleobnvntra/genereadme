@@ -1,19 +1,17 @@
-import program from "./setup.js";
-import { readConfigFile } from "../../utils/readConfig.js";
+import { readConfigFile } from "../utils/readConfig.js";
 
 /**
  * Retrieves the flag options in the command line arguments.
  * @returns {Object} The options object.
  */
-export function getOptions() {
-
-   //If arguments are passed in the command line, they will override the config file values.
+export function getOptions(options) {
+  //If arguments are passed in the command line, they will override the config file values.
   const config = readConfigFile();
-  const apiKey = program.opts().apiKey || config.apiKey;
-  const provider = program.opts().provider || config.provider;
-  const outputFile = program.opts().output || config.outputFile;
-  const temperature = program.opts().temperature  || config.temperature;
-  const tokenUsage = program.opts().tokenUsage || config.tokenUsage;
+  const apiKey = options.apiKey || process.env.API_KEY || config.apiKey;
+  const provider = options.provider || config.provider;
+  const outputFile = options.output || config.outputFile;
+  const temperature = options.temperature || config.temperature;
+  const tokenUsage = options.tokenUsage || config.tokenUsage;
 
   if (outputFile && !outputFile.endsWith(".md")) {
     throw new Error(

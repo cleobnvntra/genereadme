@@ -14,9 +14,7 @@ export default function createProgram() {
   program
     .name(packageJson.name)
     .usage("<filename> [options]")
-    .description(
-      "CLI tool to generate a README file explaining a source code file"
-    )
+    .description("CLI tool to generate a README file explaining a source code file")
     .helpCommand(false)
     .addHelpText("after", "\nSupported providers: [Groq, OpenRouter]")
     .version(

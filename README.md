@@ -1,3 +1,7 @@
+# Contrubutions
+
+Contributions to `GENEREADME` are welcome! Please checkout [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on setting up the environment, how to run and test the tool, and submitting changes.
+
 # GENEREADME
 
 `GENEREADME` is a command-line tool that takes in a file, processes it, and generates a README file with an explanation or documentation of the contents of the file. The tool utilizes OpenAI chat completion to analyze the file and generate content.
@@ -54,36 +58,18 @@ Files to be used can be placed anywhere as long as you provide the appropriate p
 
 If you don't want to specify the options as command line arguments, you could add an optional TOML config file.
 
-Create `genereadme-config.toml` in your home directory. For eg. in windows, it is:  `C:\Users\yourusername`
+Create `genereadme-config.toml` in your home directory. For eg. in windows, it is: `C:\Users\yourusername`
 
 Here is an example:
 
 `genereadme-config.toml`
+
 ```
-apiKey = "yourAPIkey"
+apiKey = "your-api-key"
+provider = "openrouter" or "groq"
+output = "output-file.md"
 temperature = 0.5
 tokenUsage = true
 ```
 
 If you want to override any of the options, you can enter them as command line arguments.
-
-
-<br/>
-
-# Dependencies
-
-### [OpenAI](https://openai.com/)
-
-OpenAI is an artificial intelligence research organization and technology provider that develops cutting-edge machine learning models, including large language models such as GPT, to enable natural language understanding and generation. These models can perform a wide variety of tasks, such as text completion, conversation, content creation, and more, by learning from vast datasets and generating human-like responses. OpenAI's APIs allow developers to integrate advanced AI capabilities into applications, making it a powerful tool for automation, chatbots, and natural language processing.
-
-```
-npm install openai
-```
-
-### [Commander.js](https://www.npmjs.com/package/commander)
-
-A library for creating command-line interfaces in Node.js. It provides a user-friendly way to define commands, arguments, and even subcommands for a CLI tool. It handles parsing of trhe command-line arguments, provides help and error messages, and makes it easy to organize your tool's functionality.
-
-```
-npm install commander
-```

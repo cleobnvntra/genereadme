@@ -14,15 +14,11 @@ export function getOptions(options) {
   const tokenUsage = options.tokenUsage || config.tokenUsage;
 
   if (outputFile && !outputFile.endsWith(".md")) {
-    throw new Error(
-      "Invalid filename provided. The filename must be a markdown file (.md)."
-    );
+    throw new Error("Invalid filename provided. The filename must be a markdown file (.md).");
   }
 
   if (temperature && (temperature <= 0 || temperature > 1.5)) {
-    throw new Error(
-      "Invalid temperature provided. The temperature can only be from 0.1 to 1.5."
-    );
+    throw new Error("Invalid temperature provided. The temperature can only be from 0.1 to 1.5.");
   }
 
   return { apiKey, provider, outputFile, temperature, tokenUsage };

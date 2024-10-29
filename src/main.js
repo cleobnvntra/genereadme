@@ -8,22 +8,20 @@ function main() {
   const program = createProgram();
   program.action(async (files, args) => {
     try {
-      const { apiKey, provider, outputFile, temperature, tokenUsage } =
-        getOptions(args);
+      const { apiKey, provider, outputFile, temperature, tokenUsage } = getOptions(args);
 
       let totalPromptTokensUsed = 0;
       let totalCompletionTokensUsed = 0;
       let combinedContent = "";
 
       for (const file of files) {
-        const { promptTokensUsed, completionTokensUsed, outputContent } =
-          await generateCompletion(
-            file,
-            apiKey,
-            provider,
-            outputFile,
-            temperature
-          );
+        const { promptTokensUsed, completionTokensUsed, outputContent } = await generateCompletion(
+          file,
+          apiKey,
+          provider,
+          outputFile,
+          temperature
+        );
 
         if (tokenUsage) {
           totalPromptTokensUsed += promptTokensUsed;

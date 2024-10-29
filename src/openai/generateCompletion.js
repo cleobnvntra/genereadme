@@ -15,9 +15,9 @@ import generatePrompt from "../prompts/generatePrompt.js";
 export default async function generateCompletion(
   file,
   apiKey,
-  provider="Groq",
+  provider = "Groq",
   outputFile,
-  temp=0.7
+  temp = 0.7
 ) {
   const { client, model } = createClient(provider, apiKey);
   const codeContent = fs.readFileSync(file, "utf-8");

@@ -8,7 +8,12 @@
     "genereadme": "./src/main.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "lint": "npx eslint",
+    "lint:fix": "npx eslint --fix",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -26,5 +31,21 @@
     "fs": "^0.0.1-security",
     "openai": "^4.63.0",
     "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "3.3.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

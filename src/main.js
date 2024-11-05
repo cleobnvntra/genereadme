@@ -4,7 +4,7 @@ import createProgram from "./commander/setup.js";
 import { getOptions } from "./args/argHandlers.js";
 import generateCompletion from "./openai/generateCompletion.js";
 
-function main() {
+export default async function main() {
   const program = createProgram();
   program.action(async (files, args) => {
     try {
@@ -14,7 +14,8 @@ function main() {
       let totalCompletionTokensUsed = 0;
       let combinedContent = "";
 
-      for (const file of files) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         const { promptTokensUsed, completionTokensUsed, outputContent } = await generateCompletion(
           file,
           apiKey,
@@ -29,7 +30,10 @@ function main() {
         }
 
         if (outputFile) {
-          combinedContent += outputContent + "\n\n";
+          combinedContent += outputContent;
+          if (i !== files.length - 1) {
+            combinedContent += "\n\n";
+          }
         }
       }
 
@@ -44,11 +48,14 @@ function main() {
         console.error(`Completion tokens used: [${totalCompletionTokensUsed}]`);
       }
     } catch (error) {
-      console.error("Error generating README:", error.message);
+      console.error(`Error generating README: ${error.message}`);
+
       process.exit(1);
     }
   });
-  program.parse(process.argv);
+  await program.parseAsync(process.argv);
 }
 
-main();
+if (process.env.NODE_ENV !== "test") {
+  main();
+}

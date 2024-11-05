@@ -19,7 +19,8 @@ export default async function generateCompletion(
   outputFile,
   temp = 0.7
 ) {
-  const { client, model } = createClient(provider, apiKey);
+  const { client, model } = await createClient(provider, apiKey);
+  console.log("I CONTINUED");
   const codeContent = fs.readFileSync(file, "utf-8");
   const prompt = generatePrompt(codeContent);
 

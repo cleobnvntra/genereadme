@@ -8,12 +8,12 @@ import "dotenv/config";
  * @param {string} apiKey - The valid API KEY for the provider.
  * @returns {Object} The OpenAI client and model.
  */
-export default function createOpenAIClient(provider, apiKey) {
+export default async function createOpenAIClient(provider, apiKey) {
   const { baseURL, model } = getProviderDetails(provider);
 
-  if (!apiKey && process.env.API_KEY) {
+  if (!apiKey && !process.env.API_KEY) {
     throw new Error(
-      `API key is required to use the tool. Please provide a valid API key for the provider ${provider}.`
+      `An API key is required to use the tool. Please provide a valid API key for the provider ${provider}.`
     );
   }
 

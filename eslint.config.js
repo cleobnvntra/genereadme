@@ -11,6 +11,7 @@ export default [
   {
     rules: {
       "no-unused-vars": "error",
+      "no-undef": "off",
       ...prettierConfig.rules,
       "prettier/prettier": "error",
       "linebreak-style": ["error", "windows"],

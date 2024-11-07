@@ -69,6 +69,43 @@ npm run lint:fix
 
 The project also has pre-commit hooks which will automatically run the formatter and linter on any staged files when committing changes, which uses [Husky](https://typicode.github.io/husky/) and [lint-staged](https://github.com/lint-staged/lint-staged).
 
+5. **Unit Tests**: Commands to use to run unit testing
+
+#### Run test
+
+This command will run all the tests in the project.
+
+```bash
+npm run test
+```
+
+#### Test watch
+
+This command will run all the tests in the project, and watches any changes to the test files. Any changes made to the test files will trigger the tester to run again.
+
+```bash
+npm run test:watch
+```
+
+#### Test coverage
+
+This command will run all the tests in the project, and provides a coverage report. The coverage report provides details such as the coverage percentage for each files and specifically what lines are not covered by the tests.
+
+```bash
+npm run test:coverage
+```
+
+#### Silent mode
+
+Adding `:silent` to the commands above (excluding coverage) enables the silent mode feature. This turns of logging when running the tests. It is ideal to use this command when writing tests without the need to see the logs coming from the tool.
+
+```bash
+npm run test:silent
+```
+```bash
+npm run test:watch:silent
+```
+
 # Notable Dependencies
 
 ### [OpenAI](https://openai.com/)

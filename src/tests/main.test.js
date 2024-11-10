@@ -1,7 +1,7 @@
 import nock from "nock";
 import fs from "fs";
 import path from "path";
-import { jest } from "@jest/globals";
+import { jest, expect } from "@jest/globals";
 import main from "../main.js";
 import { mockGroqResponse, mockOpenRouterResponse } from "./mockResponse.js";
 

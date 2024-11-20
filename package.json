@@ -1,6 +1,6 @@
 {
   "name": "genereadme",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A command-line tool that takes in a file and outputs a README.md file that explains the inputted file.",
   "main": "./src/main.js",
   "type": "module",

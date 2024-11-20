@@ -27,7 +27,7 @@ API_KEY=your-api-key
 
 #### genereadme-config.toml
 
-```toml
+```
 apiKey = "your-api-key"
 provider = "openrouter" or "groq"
 output = "output-file.md"

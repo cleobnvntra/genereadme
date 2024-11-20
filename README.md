@@ -23,12 +23,6 @@ genereadme <files> -a API_KEY
 genereadme <files> --api-key API_KEY
 ```
 
-Install the dependencies:
-
-```
-npm install -g
-```
-
 Run the tool with the existing sample files or start using your own:
 
 ```

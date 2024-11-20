@@ -14,7 +14,7 @@ cd genereadme
 2. **Install Dependencies:** Make sure you have Node.js installed and install the required dependencies.
 
 ```bash
-npm install -g .
+npm install -g
 ```
 
 3. **Configuration:** Multiple ways to configure options.

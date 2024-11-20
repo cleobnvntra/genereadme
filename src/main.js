@@ -38,6 +38,10 @@ export default async function main() {
       }
 
       if (outputFile) {
+        if (!fs.existsSync("./outputs")) {
+          fs.mkdirSync("./outputs");
+        }
+
         fs.writeFileSync(`./outputs/${outputFile}`, combinedContent, "utf-8");
         console.log(`${outputFile} has been generated successfully!`);
         console.log(`${combinedContent}`);

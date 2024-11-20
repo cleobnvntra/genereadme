@@ -50,6 +50,9 @@ export default async function generateCompletion(
   }
 
   if (!outputFile) {
+    if (!fs.existsSync("./outputs")) {
+      fs.mkdirSync("./outputs");
+    }
     const fileName = path.parse(file).name;
     const outputPath = `./outputs/${fileName}_README.md`;
 

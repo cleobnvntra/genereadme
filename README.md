@@ -10,6 +10,11 @@ Contributions to `GENEREADME` are welcome! Please checkout [CONTRIBUTING.md](./C
 
 ### Usage
 
+**Install** the tool by running the following command:
+```bash
+npm i -g genereadme
+```
+
 The tool currently supports [`Groq`](https://console.groq.com/docs/openai) and [`OpenRouter`](https://openrouter.ai/docs/quick-start), which uses `Groq` by default. A valid API key for the appropriate provider must be provided.
 
 Provide a valid API key either by creating a .env file or through the -a or --api-key flag when using the command:

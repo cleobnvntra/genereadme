@@ -1,11 +1,15 @@
 import { Command } from "commander";
-import { createRequire } from "module";
+import { readFileSync } from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import addProgramOptions from "./addProgramOptions.js";
 import addProgramArguments from "./addProgramArguments.js";
 import overrideErrorOutput from "./overrideErrorOutput.js";
 
-const require = createRequire(import.meta.url);
-const packageJson = require("../../package.json");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const packageJsonPath = path.resolve(__dirname, "../../package.json");
+const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
 
 export default function createProgram() {
   // https://www.npmjs.com/package/commander

@@ -62,6 +62,7 @@ describe("tokenUsage functionality", () => {
     consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     jest.spyOn(fs, "writeFileSync").mockImplementation(() => {});
     jest.spyOn(fs, "readFileSync").mockImplementation(() => "Mocked file content");
+    jest.spyOn(fs, "existsSync").mockReturnValue(true);
   });
 
   afterEach(() => {

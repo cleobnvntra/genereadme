@@ -14,6 +14,10 @@ describe("main function e2e", () => {
   beforeEach(() => {
     jest.spyOn(fs, "writeFileSync").mockImplementation(() => {});
     jest.spyOn(fs, "readFileSync").mockImplementation(() => "Mocked file content");
+    const outputsPath = path.resolve("./outputs");
+    if (fs.existsSync(outputsPath)) {
+      fs.rmdirSync(outputsPath);
+    }
   });
 
   afterEach(() => {
@@ -23,6 +27,8 @@ describe("main function e2e", () => {
 
   it("generates a README using Groq without a custom output file", async () => {
     jest.spyOn(fs, "existsSync").mockReturnValue(false);
+    jest.spyOn(fs, "mkdirSync").mockImplementation(() => {});
+
     nock("https://api.groq.com/openai/v1").post("/chat/completions").reply(200, mockGroqResponse);
 
     process.argv = [
